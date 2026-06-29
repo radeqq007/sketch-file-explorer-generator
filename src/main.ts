@@ -17,12 +17,15 @@ const explorerWidth = width - padding * 2;
 const explorerHeight = height - padding * 2;
 
 const getFiles = (): string[] => {
-  const ta = document.getElementById("files") as HTMLTextAreaElement
-  return ta.value.split("\n").filter(f => f != "")
-}
+	const ta = document.getElementById("files") as HTMLTextAreaElement;
+	return ta.value.split("\n").filter((f) => f != "");
+};
 
 const drawWindow = () => {
-	rc.rectangle(padding, padding, explorerWidth, explorerHeight, { fill: "white", fillStyle: "solid" });
+	rc.rectangle(padding, padding, explorerWidth, explorerHeight, {
+		fill: "white",
+		fillStyle: "solid",
+	});
 };
 
 const drawBar = () => {
@@ -61,37 +64,40 @@ const drawPathBar = (path: string) => {
 };
 
 const drawFiles = (files: string[]) => {
-  const iconLeft = 11.2;
-  const iconRight = 56;
-  const iconCenter = (iconLeft + iconRight) / 2;
-  const fileX = padding * 5;
-  const fileY = padding * 4.4 + barHeight;
-  const translateX = fileX - iconCenter;
+	const iconLeft = 11.2;
+	const iconRight = 56;
+	const iconCenter = (iconLeft + iconRight) / 2;
+	const fileX = padding * 5;
+	const fileY = padding * 4.4 + barHeight;
+	const translateX = fileX - iconCenter;
 
-  for (const file of files) {
-    ctx.save()
-    ctx.translate(translateX, fileY)
+	for (const file of files) {
+		ctx.save();
+		ctx.translate(translateX, fileY);
 
-    rc.path("M16.8 61.6a5.6 5.6 0 0 1-5.6-5.6V11.2a5.6 5.6 0 0 1 5.6-5.6h22.4a6.72 6.72 0 0 1 4.771 1.977l10.046 10.046A6.72 6.72 0 0 1 56 22.4v33.6a5.6 5.6 0 0 1-5.6 5.6z", { fill: "#feffd6", fillStyle: "solid"});
-    rc.path("M39.2 5.6v14a2.8 2.8 0 0 0 2.8 2.8h14");
-    rc.path("M28 25.2H22.4");
-    rc.path("M44.8 36.4H22.4");
-    rc.path("M44.8 47.6H22.4");
-    
-    ctx.restore()
+		rc.path(
+			"M16.8 61.6a5.6 5.6 0 0 1-5.6-5.6V11.2a5.6 5.6 0 0 1 5.6-5.6h22.4a6.72 6.72 0 0 1 4.771 1.977l10.046 10.046A6.72 6.72 0 0 1 56 22.4v33.6a5.6 5.6 0 0 1-5.6 5.6z",
+			{ fill: "#feffd6", fillStyle: "solid" },
+		);
+		rc.path("M39.2 5.6v14a2.8 2.8 0 0 0 2.8 2.8h14");
+		rc.path("M28 25.2H22.4");
+		rc.path("M44.8 36.4H22.4");
+		rc.path("M44.8 47.6H22.4");
 
-    ctx.save()
-    ctx.textAlign = "center";
-    ctx.fillText(file, fileX, fileY + 82);
-    ctx.restore()
-  }
-}
+		ctx.restore();
+
+		ctx.save();
+		ctx.textAlign = "center";
+		ctx.fillText(file, fileX, fileY + 82);
+		ctx.restore();
+	}
+};
 
 const drawExplorer = (path: string, files: string[]) => {
 	drawWindow();
 	drawBar();
 	drawPathBar(path);
-  drawFiles(files)
+	drawFiles(files);
 };
 
 drawExplorer("example/src/", getFiles());
@@ -108,4 +114,3 @@ btn.addEventListener("click", () => {
 	ctx.clearRect(0, 0, width, height);
 	drawExplorer(pathInput.value, getFiles());
 });
-
