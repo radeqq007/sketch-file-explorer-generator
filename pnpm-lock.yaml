@@ -11,6 +11,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.1
         version: 4.3.1(vite@8.1.0(jiti@2.7.0))
+      lucide:
+        specifier: ^1.22.0
+        version: 1.22.0
       roughjs:
         specifier: ^4.6.6
         version: 4.6.6
@@ -422,6 +425,9 @@ packages:
     resolution: {integrity: sha512-NXYBzinNrblfraPGyrbPoD19C1h9lfI/1mzgWYvXUTe414Gz/X1FD2XBZSZM7rRTrMA8JL3OtAaGifrIKhQ5yQ==}
     engines: {node: '>= 12.0.0'}
 
+  lucide@1.22.0:
+    resolution: {integrity: sha512-QRkKyfF6X4jwzMfBIgx46GsSz0PUQnIKkX9Rg5anXMVJmIO89DAhkKzUfwg+2c4KJGi+VT9Dks77J1NFnjU4Vg==}
+
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
@@ -797,6 +803,8 @@ snapshots:
       lightningcss-linux-x64-musl: 1.32.0
       lightningcss-win32-arm64-msvc: 1.32.0
       lightningcss-win32-x64-msvc: 1.32.0
+
+  lucide@1.22.0: {}
 
   magic-string@0.30.21:
     dependencies:

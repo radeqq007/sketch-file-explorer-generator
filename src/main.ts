@@ -1,8 +1,13 @@
 import "./style.css";
+import { createIcons, icons } from "lucide";
 import rough from "roughjs";
+
+createIcons({ icons });
 
 const filesTextArea = document.getElementById("files") as HTMLTextAreaElement;
 const spaceRange = document.getElementById("space") as HTMLInputElement;
+const downloadBtn = document.getElementById("download") as HTMLButtonElement;
+const copyBtn = document.getElementById("copy") as HTMLButtonElement;
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -141,4 +146,35 @@ btn.addEventListener("click", () => {
 	}
 	ctx.clearRect(0, 0, width, height);
 	drawExplorer(pathInput.value, getFiles());
+});
+
+downloadBtn.addEventListener("click", () => {
+	const link = document.createElement("a");
+	link.download = "file-explorer.png";
+	link.href = canvas.toDataURL("image/png");
+	link.click();
+});
+
+copyBtn.addEventListener("click", async () => {
+	try {
+		const blob = await new Promise<Blob>((resolve, reject) =>
+			canvas.toBlob((blob) => {
+				if (blob) resolve(blob);
+				else reject(new Error("Failed to create blob."));
+			}, "image/png"),
+		);
+
+		await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+
+		copyBtn.innerHTML = "<i data-lucide='copy-check'></i>";
+		createIcons({ icons });
+
+		setTimeout(() => {
+			copyBtn.innerHTML = "<i data-lucide='copy'></i>";
+			createIcons({ icons });
+		}, 1000);
+	} catch (err) {
+		console.error(err);
+		alert("Couldn't copy the image.");
+	}
 });

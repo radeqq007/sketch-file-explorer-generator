@@ -16,6 +16,7 @@
 	},
 	"dependencies": {
 		"@tailwindcss/vite": "^4.3.1",
+		"lucide": "^1.22.0",
 		"roughjs": "^4.6.6",
 		"tailwindcss": "^4.3.1"
 	}

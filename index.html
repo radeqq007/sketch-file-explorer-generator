@@ -37,8 +37,16 @@ directory/
         <button id="generate" class="bg-blue-200 rounded-sm p-1 cursor-pointer">Generate</button>
       </div>
 
-      <div class="flex justify-center items-start h-full p-10">
+      <div class="flex flex-col items-center justify-start h-full p-10 w-full">
         <canvas id="canvas" height="550" width="850"></canvas>
+        <span class="flex justify-center gap-2 w-full text-slate-800 *:bg-blue-200 *:rounded-sm *:aspect-square *:p-1 *:w-9 *:grid *:place-items-center *:cursor-pointer">
+          <button id="download">
+            <i data-lucide="download"></i>
+          </button>
+          <button id="copy">
+            <i data-lucide="copy"></i>
+          </button>
+        </span>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
