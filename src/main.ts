@@ -20,7 +20,7 @@ const explorerWidth = width - padding * 2;
 const explorerHeight = height - padding * 2;
 
 const getFiles = (): string[] => {
-	return filesTextArea.value.split("\n").filter((f) => f != "");
+	return filesTextArea.value.split("\n").map(v => v.trim()).filter(Boolean);
 };
 
 const getSpacing = (): number => {
@@ -94,21 +94,28 @@ const drawFiles = (files: string[]) => {
 		ctx.save();
 		ctx.translate(translateX, fileY);
 
-		rc.path(
-			"M16.8 61.6a5.6 5.6 0 0 1-5.6-5.6V11.2a5.6 5.6 0 0 1 5.6-5.6h22.4a6.72 6.72 0 0 1 4.771 1.977l10.046 10.046A6.72 6.72 0 0 1 56 22.4v33.6a5.6 5.6 0 0 1-5.6 5.6z",
-			{ fill: "#feffd6", fillStyle: "solid" },
-		);
-		rc.path("M39.2 5.6v14a2.8 2.8 0 0 0 2.8 2.8h14");
-		rc.path("M28 25.2H22.4");
-		rc.path("M44.8 36.4H22.4");
-		rc.path("M44.8 47.6H22.4");
+    if (file.slice(-1) === "/") {
+      rc.path(
+        "m13 36.4 3.9-7.54A5.2 5.2 0 0 1 24.024 26H52a5.2 5.2 0 0 1 5.044 6.5l-4.004 15.6a5.2 5.2 0 0 1-5.07 3.9H10.4a5.2 5.2 0 0 1-5.2-5.2V13a5.2 5.2 0 0 1 5.2-5.2h10.14a5.2 5.2 0 0 1 4.394 2.34l2.106 3.12a5.2 5.2 0 0 0 4.342 2.34H46.8a5.2 5.2 0 0 1 5.2 5.2v5.2",
+        { fill: "#e8df5f", fillStyle: "solid" },
+      );
+      
+    } else {
+      rc.path(
+        "M16.8 61.6a5.6 5.6 0 0 1-5.6-5.6V11.2a5.6 5.6 0 0 1 5.6-5.6h22.4a6.72 6.72 0 0 1 4.771 1.977l10.046 10.046A6.72 6.72 0 0 1 56 22.4v33.6a5.6 5.6 0 0 1-5.6 5.6z",
+        { fill: "#feffd6", fillStyle: "solid" },
+      );
+      rc.path("M39.2 5.6v14a2.8 2.8 0 0 0 2.8 2.8h14");
+      rc.path("M28 25.2H22.4");
+      rc.path("M44.8 36.4H22.4");
+      rc.path("M44.8 47.6H22.4");
+    }
 
-		ctx.restore();
-
-		ctx.save();
-		ctx.textAlign = "center";
-		ctx.fillText(file, fileX, fileY + 82);
-		ctx.restore();
+    ctx.restore();
+    ctx.save();
+    ctx.textAlign = "center";
+    ctx.fillText(file, fileX, fileY + 82);
+    ctx.restore();
 	});
 };
 
