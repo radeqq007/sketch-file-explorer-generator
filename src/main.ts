@@ -1,6 +1,9 @@
 import "./style.css";
 import rough from "roughjs";
 
+const filesTextArea = document.getElementById("files") as HTMLTextAreaElement;
+const spaceRange = document.getElementById("space") as HTMLInputElement;
+
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 const rc = rough.canvas(canvas);
@@ -17,9 +20,12 @@ const explorerWidth = width - padding * 2;
 const explorerHeight = height - padding * 2;
 
 const getFiles = (): string[] => {
-	const ta = document.getElementById("files") as HTMLTextAreaElement;
-	return ta.value.split("\n").filter((f) => f != "");
+	return filesTextArea.value.split("\n").filter((f) => f != "");
 };
+
+const getSpacing = (): number => {
+  return Number(spaceRange.value)
+}
 
 const drawWindow = () => {
 	rc.rectangle(padding, padding, explorerWidth, explorerHeight, {
@@ -67,11 +73,24 @@ const drawFiles = (files: string[]) => {
 	const iconLeft = 11.2;
 	const iconRight = 56;
 	const iconCenter = (iconLeft + iconRight) / 2;
-	const fileX = padding * 5;
-	const fileY = padding * 4.4 + barHeight;
-	const translateX = fileX - iconCenter;
 
-	for (const file of files) {
+  const cellWidth = getSpacing();   // horizontal space reserved per file
+	const cellHeight = 110;
+
+  const startX = padding * 6;
+	const startY = padding * 4.4 + barHeight;
+
+  const availableWidth = explorerWidth - (startX - padding) - padding;
+	const columns = Math.max(1, Math.floor(availableWidth / cellWidth));
+
+	files.forEach((file, i) => {
+    const col = i % columns;
+		const row = Math.floor(i / columns);
+
+    const fileX = startX + col * cellWidth;
+		const fileY = startY + row * cellHeight;
+		const translateX = fileX - iconCenter;
+
 		ctx.save();
 		ctx.translate(translateX, fileY);
 
@@ -90,7 +109,7 @@ const drawFiles = (files: string[]) => {
 		ctx.textAlign = "center";
 		ctx.fillText(file, fileX, fileY + 82);
 		ctx.restore();
-	}
+	});
 };
 
 const drawExplorer = (path: string, files: string[]) => {
